@@ -1,11 +1,8 @@
-# Thin Airfoil Theory Implementation
-# This program implements thin airfoil theory to analyze airfoil performance
-# Author: Claude Assistant
 
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import simpson, quad  # Fixed: changed simps to simpson
-from scipy.interpolate import interp1d
+from scipy.interpolate import interp1d 
 
 class ThinAirfoilAnalyzer:
     def __init__(self):
