@@ -510,3 +510,5 @@ class ThinAirfoilAnalyzer:
 if __name__ == "__main__":
     analyzer = ThinAirfoilAnalyzer()
     analyzer.main()
+
+

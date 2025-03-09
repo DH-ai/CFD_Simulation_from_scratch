@@ -26,7 +26,6 @@ class ThinAirfoilTheory:
         y_points = np.zeros_like(x_points)
         
         if airfoil_type.lower() == 'naca':
-            # NACA 4-digit formula for camber line
             for i, x in enumerate(x_points):
                 if x < p:
                     # Formula for camber line before p
@@ -250,8 +249,12 @@ class ThinAirfoilTheory:
         scale = 0.8 * min(np.diff(x_grid)[0], np.diff(y_grid)[0]) / np.max(magnitude)
         
         # Plot vector field
-        ax.quiver(X, Y, u, v, magnitude, scale=1/scale, cmap='viridis', width=0.002)
+        q = ax.quiver(X, Y, u, v, magnitude, scale=1/scale, cmap='viridis', width=0.002)
         
+        # Adding a color bar 
+        cbar = fig.colorbar(q, ax=ax)
+        cbar.set_label('Velocity Magnitude (m/s)')
+
         ax.set_title(title)
         ax.set_xlabel('x/c')
         ax.set_ylabel('y/c')
@@ -357,19 +360,24 @@ if __name__ == "__main__":
     x_points = np.linspace(0, 1, 100)
 
     # NACA Airfoil (NACA 4412)
-    m = 0.04  # maximum camber
-    p = 0.4   # location of maximum camber
+    # NACA 0011 for 23b00007
+    # m = 0 # maximum camber
+    # p = 15  # location of maximum camber
+
+    m = 6.9# maximum camber
+    p =  25.5 # location of maximum camber
+
 
     # Generate camber line
     y_points = analyzer.generate_camber_line(x_points, airfoil_type='naca', m=m, p=p)
 
     # 1. Plot camber line
-    camber_plot = analyzer.plot_camber_line(x_points, y_points, title="NACA 4412 Camber Line")
+    camber_plot = analyzer.plot_camber_line(x_points, y_points, title="Camber Line")
     camber_plot.savefig("naca_camber_line.png", dpi=300, bbox_inches='tight')
 
     # 2. Calculate and plot camber line slope
     slopes = analyzer.compute_camber_slope(x_points, y_points)
-    slope_plot = analyzer.plot_camber_slope(x_points, slopes, title="NACA 4412 Camber Line Slope")
+    slope_plot = analyzer.plot_camber_slope(x_points, slopes, title="Camber Line Slope")
     slope_plot.savefig("naca_camber_slope.png", dpi=300, bbox_inches='tight')
 
     # 3. Calculate Cl vs alpha and compare with CFD
@@ -382,14 +390,14 @@ if __name__ == "__main__":
 
     # Plot Cl vs alpha comparison
     cl_plot = analyzer.plot_cl_vs_alpha(alpha_range, cl_values, 
-                                      title="NACA 4412: Cl vs Alpha Comparison",
+                                      title="Cl vs Alpha Comparison",
                                       cfd_data=(alpha_cfd, cl_cfd),
                                       label="Thin Airfoil Theory")
     cl_plot.savefig("naca_cl_vs_alpha.png", dpi=300, bbox_inches='tight')
 
     # 4. Calculate and plot vector field at alpha = 3 degrees
     vf_plot, (u, v, X, Y) = analyzer.plot_vector_field(x_points, y_points, 3, 
-                                                    title="NACA 4412: Velocity Field at α=3°")
+                                                    title="Velocity Field at α=3°")
     vf_plot.savefig("naca_vector_field.png", dpi=300, bbox_inches='tight')
 
     # 5. Calculate circulation using line integral
