@@ -143,8 +143,8 @@ class ThinAirfoilAnalyzer:
         """
         alpha = np.radians(alpha_deg)
         # Reduced grid size for quick computation.
-        x_grid = np.linspace(-1, 3, 25)
-        y_grid = np.linspace(-1.5, 1.5, 25)
+        x_grid = np.linspace(-1, 3, 250)
+        y_grid = np.linspace(-1.5, 1.5, 250)
         X, Y = np.meshgrid(x_grid, y_grid)
         # Freestream velocity.
         u = np.ones_like(X) * self.V_inf * np.cos(alpha)

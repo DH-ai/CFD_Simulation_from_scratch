@@ -357,8 +357,8 @@ if __name__ == "__main__":
     x_points = np.linspace(0, 1, 100)
 
     # NACA Airfoil (NACA 4412)
-    m = 0.04  # maximum camber
-    p = 0.4   # location of maximum camber
+    m = 0.7  # maximum camber
+    p = 15   # location of maximum camber
 
     # Generate camber line
     y_points = analyzer.generate_camber_line(x_points, airfoil_type='naca', m=m, p=p)
